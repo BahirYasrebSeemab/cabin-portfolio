@@ -1,0 +1,6 @@
+# Bake-only sources; the site uses the baked images in public/assets/forest.
+public/assets/models/island_tree_01
+public/assets/models/island_tree_02
+public/assets/forest/cells
+bake.html
+assemble.html

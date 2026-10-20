@@ -1,0 +1,21 @@
+{
+  "name": "Bahir Yasreb Seemab",
+  "title": "Full-Stack Software Engineer",
+  "bio": [
+    "I'm a full-stack software engineer with 5+ years of building for the web — mostly on the frontend, where I care about the small details that make an interface feel right.",
+    "I build the backends behind them too: APIs, databases, auth and security. Lately that has meant offline-first lockdown software, a zero-knowledge password manager and an AI coach that makes you earn your scroll time.",
+    "I'm open to remote work anywhere in the world — the plan is to see a lot of it while I work.",
+    "Away from the keyboard: chess, books, football, guitar and flute, and a lot of time outdoors. One day, a moose."
+  ],
+  "location": "Dushanbe, Tajikistan",
+  "timezone": "Asia/Dushanbe",
+  "openTo": "Remote work, worldwide",
+  "contacts": {
+    "email": "bahiryasreb@gmail.com",
+    "github": "https://github.com/BahirYasrebSeemab",
+    "instagram": "https://www.instagram.com/_.bahir._",
+    "linkedin": "https://www.linkedin.com/in/bahir-yasreb-seemab"
+  },
+  "chessCom": "https://www.chess.com/member/Y4sreb",
+  "resume": ""
+}

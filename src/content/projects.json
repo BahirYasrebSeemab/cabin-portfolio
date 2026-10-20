@@ -1,0 +1,69 @@
+[
+  {
+    "id": "stillgate",
+    "name": "Stillgate",
+    "icon": "🔒",
+    "status": "In use",
+    "summary": "Lockdown software for the shared visitor PCs at American Space Dushanbe.",
+    "description": [
+      "Visitor PCs boot straight into a locked screen. The registration desk unlocks a PC for a set time from a manager app; the visitor then sees a start screen with only the allowed programs and websites, and the PC locks itself again when time is up.",
+      "Offline-first on the local network, with TLS certificate pinning, HMAC challenge-response login per PC, a scrypt-hashed restore password and hardened Electron apps."
+    ],
+    "stack": ["Electron", "Node.js", "TypeScript", "TLS / HMAC"],
+    "links": { "code": "https://github.com/BahirYasrebSeemab/Stillgate" }
+  },
+  {
+    "id": "password-manager",
+    "name": "Password Manager",
+    "icon": "🗝️",
+    "status": "In progress",
+    "summary": "A zero-knowledge password manager: the server never sees a password, only ciphertext.",
+    "description": [
+      "A multi-client monorepo: a FastAPI backend, a React Native / Expo app, and a browser extension and CLI on the way.",
+      "Every vault entry is encrypted on-device with AES-256-GCM before it leaves the client, and login uses a key derived from the master password that can't be reversed into it. A fully compromised server leaks nothing usable."
+    ],
+    "stack": ["Python", "FastAPI", "React Native", "Expo", "TypeScript", "AES-256-GCM"],
+    "links": {},
+    "private": true
+  },
+  {
+    "id": "future-flow",
+    "name": "Future Flow",
+    "icon": "⏳",
+    "status": "In progress",
+    "summary": "Earn your scroll time: an AI future-self coach that gates social media on verified progress.",
+    "description": [
+      "An Android app where an AI \"future you\" turns who you want to become into skills and daily plans.",
+      "It verifies the work with real evidence — GitHub diffs, maths answers checked by a CAS, reading logs — and pays out social-media time from an event-sourced ledger that a native guard enforces."
+    ],
+    "stack": ["TypeScript", "React Native", "Zod", "Gemini"],
+    "links": {},
+    "private": true
+  },
+  {
+    "id": "spotlight",
+    "name": "Spotlight",
+    "icon": "✨",
+    "summary": "A mobile-first platform bridging physical and digital fashion.",
+    "description": [
+      "Brands publish drops; buyers receive a digital twin of their purchase to tag, display and share across their profile and posts.",
+      "Real-time sync, offline support and a content feed inspired by modern streaming platforms."
+    ],
+    "stack": ["React Native", "Expo", "TypeScript", "Supabase", "Redux Toolkit", "TanStack Query"],
+    "links": { "live": "https://spotlight-web-delta.vercel.app" },
+    "private": true
+  },
+  {
+    "id": "karevan",
+    "name": "Karevan",
+    "icon": "🐪",
+    "summary": "A full-stack fintech web app, built as a team.",
+    "description": [
+      "Authentication, real-time chat with optimistic UI updates, and a responsive design.",
+      "My part: the backend on Supabase — auth, the data model and the real-time chat."
+    ],
+    "stack": ["React", "TypeScript", "Supabase", "TanStack Query", "Tailwind"],
+    "role": "Backend (Supabase)",
+    "links": { "live": "https://roaming-karevan.vercel.app", "code": "https://github.com/Fa1tinthesky/Karevan" }
+  }
+]
