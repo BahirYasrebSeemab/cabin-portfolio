@@ -3,7 +3,6 @@
 Usage (from the cabin folder):
   python3 scripts/fetch-polyhaven.py --models Camera_01 gamepad
   python3 scripts/fetch-polyhaven.py --textures forest_floor
-  python3 scripts/fetch-polyhaven.py --bake-sources     # the big trees used to re-bake the forest
 
 Find names at https://polyhaven.com/models and https://polyhaven.com/textures —
 the name is the last part of the asset's URL (e.g. polyhaven.com/a/chess_set -> chess_set).
@@ -20,7 +19,6 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "public", "assets")
 UA = {"User-Agent": "bahir-cabin-portfolio"}
 TEX_MAPS = {"Diffuse": "diff", "nor_gl": "nor", "Rough": "rough", "AO": "ao"}
-BAKE_SOURCES = ["island_tree_01", "island_tree_02"]
 RETRIES = 5
 
 
@@ -73,11 +71,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--models", nargs="*", default=[])
     parser.add_argument("--textures", nargs="*", default=[])
-    parser.add_argument("--bake-sources", action="store_true", help="download the big trees used by bake.html")
     args = parser.parse_args()
-    models = args.models + (BAKE_SOURCES if args.bake_sources else [])
+    models = args.models
     if not models and not args.textures:
-        parser.error("nothing to download — pass --models, --textures or --bake-sources")
+        parser.error("nothing to download — pass --models or --textures")
 
     jobs = [j for m in models for j in model_jobs(m)] + [j for t in args.textures for j in texture_jobs(t)]
     print(f"downloading {len(jobs)} files…", flush=True)

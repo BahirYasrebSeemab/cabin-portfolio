@@ -1,5 +1,5 @@
 // Re-bakes the forest tree images. Needs the dev server running (npm run dev)
-// and the big tree models (python3 scripts/fetch-polyhaven.py --bake-sources).
+// (the trees are assembled from the pachira leaves + bark texture already in public/assets).
 //
 //   node scripts/bake-forest.mjs            bake every cell, then build the atlases
 //   node scripts/bake-forest.mjs 3          re-bake only cell 3 (then run with no args to rebuild atlases)

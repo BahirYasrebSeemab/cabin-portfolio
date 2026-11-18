@@ -2,8 +2,3 @@ node_modules
 dist
 *.log
 .vercel
-
-# Only needed to re-bake the forest (see docs/06-forest.md) — too big for git.
-# Re-download with: python3 scripts/fetch-polyhaven.py
-public/assets/models/island_tree_01
-public/assets/models/island_tree_02

@@ -29,10 +29,10 @@ export const LIGHTING: Record<Phase, Lighting> = {
     lanternIntensity: 0.5,
     stars: false,
     skyTop: "#5d93d1",
-    skyHorizon: "#cfe3d4",
-    fogColor: "#6d9468",
+    skyHorizon: "#9fbf9a",
+    fogColor: "#4c6e47",
     fogDensity: 0.022,
-    forestTint: "#a9c99f",
+    forestTint: "#c4d9bc",
   },
   sunset: {
     envIntensity: 0.45,

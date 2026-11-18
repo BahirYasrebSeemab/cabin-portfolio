@@ -57,10 +57,10 @@ function seeded(seed: number) {
 }
 
 const indicesOf = (kind: ImpostorKind) => IMPOSTORS.flatMap((imp, i) => (imp.kind === kind ? [i] : []));
-const BY_KIND: Record<ImpostorKind, number[]> = { tree: indicesOf("tree"), mid: indicesOf("mid"), bush: indicesOf("bush") };
+const BY_KIND: Record<ImpostorKind, number[]> = { tree: indicesOf("tree"), palm: indicesOf("palm"), mid: indicesOf("mid"), bush: indicesOf("bush") };
 // Share of each kind per layer: tree rings are mostly big trees, undergrowth mostly bushes.
 const LAYER_MIX: Record<Ring["layer"], [ImpostorKind, number][]> = {
-  trees: [["tree", 0.7], ["mid", 0.3]],
+  trees: [["tree", 0.5], ["palm", 0.25], ["mid", 0.25]],
   undergrowth: [["bush", 0.7], ["mid", 0.3]],
 };
 
@@ -102,11 +102,9 @@ function buildRing(ring: Ring, index: number, map: THREE.Texture, tint: THREE.Co
     const variant = pickVariant(ring.layer, rand);
     let h = ring.minH + rand() * (ring.maxH - ring.minH);
     const kind = IMPOSTORS[variant].kind;
-    // Mid-height plants fill the space under the canopy of tree rings.
-    if (ring.layer === "trees" && kind === "mid") h *= 0.5;
-    // The big trees are wider than tall, so they only fill the lower half of their
-    // 1:2 image; double the card so the tree itself reaches the ring's height.
-    if (kind === "tree") h *= 2;
+    // Under the canopy: palms reach about half the giants' height, saplings less.
+    if (ring.layer === "trees" && kind === "palm") h *= 0.42;
+    if (ring.layer === "trees" && kind === "mid") h *= 0.22;
     m.makeScale(h * IMPOSTOR_ASPECT, h, 1).setPosition(CENTER.x + Math.cos(angle) * r, 0, CENTER.y + Math.sin(angle) * r);
     mesh.setMatrixAt(i, m);
     variants[i] = variant;

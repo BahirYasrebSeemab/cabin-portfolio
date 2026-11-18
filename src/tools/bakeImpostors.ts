@@ -4,8 +4,9 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
-import { IMPOSTOR_CELL, IMPOSTORS } from "../scene/forestConfig";
+import { IMPOSTOR_CELL, IMPOSTORS, type Impostor } from "../scene/forestConfig";
 import { modelUrl } from "../scene/Model";
+import { buildRainforestTree, type TreeParts } from "./rainforestTrees";
 
 declare global {
   interface Window {
@@ -17,6 +18,8 @@ declare global {
 const { width: CELL_W, height: CELL_H } = IMPOSTOR_CELL;
 // Leaves in these models are glossy; at forest distance that reads as white glare.
 const MIN_ROUGHNESS = 0.7;
+// Rainforest canopy is darker and bluer-green than the potted-plant scans.
+const CANOPY_LEAF_TINT = new THREE.Color("#6f9a62");
 
 function makeRenderer() {
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, preserveDrawingBuffer: true });
@@ -51,15 +54,64 @@ function matte(root: THREE.Object3D) {
   });
 }
 
+/** Wrap a part so it's centred on x/z with its base (or centre) at the origin. */
+function recentre(part: THREE.Object3D, anchor: "base" | "centre") {
+  const box = new THREE.Box3().setFromObject(part);
+  const c = box.getCenter(new THREE.Vector3());
+  part.position.sub(new THREE.Vector3(c.x, anchor === "base" ? box.min.y : c.y, c.z));
+  const wrapper = new THREE.Group();
+  wrapper.add(part);
+  return wrapper;
+}
+
+async function loadTreeParts(loader: GLTFLoader): Promise<TreeParts> {
+  const [pachira, fern] = await Promise.all([
+    loader.loadAsync(modelUrl("pachira_aquatica_01")),
+    loader.loadAsync(modelUrl("fern_02")),
+  ]);
+  const leafClusters = pachira.scene.children.filter((c) => c.name.includes("_leaves_")).map((c) => {
+    c.updateMatrixWorld(true);
+    c.traverse((o) => {
+      const mesh = o as THREE.Mesh;
+      if (mesh.isMesh) {
+        const mat = (mesh.material as THREE.MeshStandardMaterial).clone();
+        mat.color.multiply(CANOPY_LEAF_TINT);
+        mesh.material = mat;
+      }
+    });
+    return recentre(c, "centre");
+  });
+  const fernCrown = recentre(fern.scene.children.find((c) => c.name === "fern_02_b")!, "base");
+  const tex = new THREE.TextureLoader();
+  const barkMap = await tex.loadAsync("/assets/textures/bark_brown_02/diff.jpg");
+  const barkNormal = await tex.loadAsync("/assets/textures/bark_brown_02/nor.jpg");
+  for (const t of [barkMap, barkNormal]) {
+    t.wrapS = t.wrapT = THREE.RepeatWrapping;
+    t.repeat.set(2, 1.5);
+  }
+  barkMap.colorSpace = THREE.SRGBColorSpace;
+  return {
+    leafClusters,
+    fernCrown,
+    bark: new THREE.MeshStandardMaterial({ map: barkMap, normalMap: barkNormal, roughness: 0.95, color: "#b8b0a0", side: THREE.DoubleSide }),
+    vine: new THREE.MeshStandardMaterial({ color: "#3b3a24", roughness: 0.9 }),
+  };
+}
+
+async function loadSubject(imp: Impostor, loader: GLTFLoader, seed: number) {
+  if (imp.procedural) return buildRainforestTree(imp.procedural, seed, await loadTreeParts(loader));
+  const gltf = await loader.loadAsync(modelUrl(imp.model!));
+  const plant = gltf.scene;
+  if (imp.variant) for (const child of [...plant.children]) if (!child.name.endsWith(`_${imp.variant}`)) plant.remove(child);
+  return plant;
+}
+
 async function bake(index: number) {
   const imp = IMPOSTORS[index];
   if (!imp) throw new Error(`no impostor ${index}`);
   const renderer = makeRenderer();
   const scene = makeScene(renderer);
-  const gltf = await new GLTFLoader().loadAsync(modelUrl(imp.model));
-  const plant = gltf.scene;
-  if (imp.variant) for (const child of [...plant.children]) if (!child.name.endsWith(`_${imp.variant}`)) plant.remove(child);
-  plant.rotation.y = imp.angle;
+  const plant = await loadSubject(imp, new GLTFLoader(), imp.seed ?? index);
   matte(plant);
   scene.add(plant);
   plant.updateMatrixWorld(true);

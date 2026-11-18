@@ -1,6 +1,6 @@
 # 06 · The forest
 
-The jungle is made of **flat cut-out pictures of real 3D trees**, standing in rings around the cabin. Inner rings are sharp; outer rings are blurrier and sink into green haze. This is light enough for phones while still looking real.
+The jungle is an Amazon-style rainforest: very tall straight-trunked giants (40–55 m) with dark umbrella crowns and hanging lianas, açaí-style palms underneath, and dense undergrowth. It's made of **flat cut-out pictures** standing in rings around the cabin — inner rings sharp, outer rings blurrier and sinking into green haze. That keeps it light enough for phones.
 
 ## Change how the forest looks (no re-baking)
 
@@ -10,27 +10,32 @@ Everything is in **`src/scene/forestConfig.ts`** → `FOREST_RINGS`. Each ring:
 |---|---|
 | `radius` | distance from the cabin (m) |
 | `spacing` | metres between trees — **smaller = denser** |
-| `minH` / `maxH` | tree height range (m) |
+| `minH` / `maxH` | height range (m) of the tallest trees in the ring |
 | `blur` | which pre-blurred image to use (`0`, `2`, `3`, `5`, `8`) |
-| `layer` | `"trees"` (mostly big trees) or `"undergrowth"` (bushes that hide trunks) |
+| `layer` | `"trees"` (giants + palms + young trees) or `"undergrowth"` (bushes that fill the gaps) |
 
-Colours per time of day (`forestTint`, `fogColor`, `fogDensity`) are in `src/scene/timeOfDay.ts`. More fog = blurrier, more mysterious jungle.
+The mix inside a ring (how many giants vs palms vs young trees) and the palm/young-tree heights are in `src/scene/Forest.tsx` → `LAYER_MIX` and `buildRing`.
 
-## Change which trees are used (needs re-baking)
+Colours per time of day (`forestTint`, `fogColor`, `fogDensity`, `skyHorizon`) are in `src/scene/timeOfDay.ts`. More fog = deeper, more mysterious jungle.
 
-The pictures are rendered once from real models and saved as images in `public/assets/forest/`. To change them:
+## Where the tree pictures come from
 
-1. Download the big source trees (only needed once — they're too big for git):
-   ```bash
-   python3 scripts/fetch-polyhaven.py --bake-sources
-   ```
-2. Edit `IMPOSTORS` in `src/scene/forestConfig.ts` — each entry is one picture: which model, which `variant`, turned by `angle`, and its `kind` (`tree`, `mid`, `bush`). Any new model must be downloaded first (see [05](05-3d-objects.md)).
-3. With `npm run dev` running, bake:
-   ```bash
-   npx playwright install chromium-headless-shell   # first time only
-   node scripts/bake-forest.mjs
-   ```
-   This renders each tree (a few minutes) and writes `public/assets/forest/trees-blur*.png`.
-4. Check it in the browser, then commit the new PNGs.
+There are no free realistic Amazon tree models, so the trees are **assembled at bake time** from real scanned parts — the `bark_brown_02` texture, the pachira's leaf clusters (tinted to rainforest green), plus code-built palm fronds. The recipes are in **`src/tools/rainforestTrees.ts`**:
 
-Tip: preview one baked tree at `http://localhost:5174/bake.html?cell=0` (the picture appears once it finishes).
+- `emergent` — the giants: tall bare trunk, buttress roots, branches only near the top, umbrella crown, lianas
+- `canopy` — slightly shorter, rounder crown
+- `palm` — thin curved trunk, feathery drooping fronds
+
+Each entry in `IMPOSTORS` (in `forestConfig.ts`) is one picture: either one of those recipes with a `seed` (a different seed = a different-looking tree), or a plain Poly Haven model (`model` + `variant`). Max 8 entries — the atlas can't be wider than 4096 px on phones.
+
+## Re-bake after changing trees
+
+With `npm run dev` running:
+
+```bash
+npx playwright install chromium-headless-shell   # first time only
+node scripts/bake-forest.mjs                     # all trees + atlases (~2 min)
+node scripts/bake-forest.mjs 3                   # just tree #3 (then run without a number to rebuild the atlases)
+```
+
+Preview one tree at `http://localhost:5174/bake.html?cell=0`. Then check the scene and commit the new PNGs in `public/assets/forest/`.

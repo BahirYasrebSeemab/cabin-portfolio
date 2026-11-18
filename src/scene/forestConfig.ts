@@ -2,26 +2,29 @@
 // models pre-rendered by bake.html. Inner rings are sharp; outer rings use
 // pre-blurred images, blend, and sink into the fog.
 
-export type ImpostorKind = "tree" | "mid" | "bush";
+export type ImpostorKind = "tree" | "palm" | "mid" | "bush";
 
 export type Impostor = {
-  model: string;
-  /** Root-part suffix for files that pack several plants ("" keeps everything). */
-  variant: string;
-  /** Turn the model before rendering, to get a second distinct look from one tree. */
-  angle: number;
   kind: ImpostorKind;
+  /** A Poly Haven model to render as-is… */
+  model?: string;
+  /** …with this root-part suffix ("" keeps everything)… */
+  variant?: string;
+  /** …or a tall Amazon-style tree assembled from real parts (src/tools/rainforestTrees.ts). */
+  procedural?: "emergent" | "canopy" | "palm";
+  seed?: number;
 };
 
+// Max 8 cells: 8 × 512px = a 4096px atlas, the largest texture all phones accept.
 export const IMPOSTORS: Impostor[] = [
-  { model: "island_tree_02", variant: "", angle: 0, kind: "tree" },
-  { model: "island_tree_02", variant: "", angle: Math.PI / 2, kind: "tree" },
-  { model: "island_tree_01", variant: "", angle: 0, kind: "tree" },
-  { model: "island_tree_01", variant: "", angle: Math.PI / 2, kind: "tree" },
-  { model: "pachira_aquatica_01", variant: "a", angle: 0, kind: "mid" },
-  { model: "pachira_aquatica_01", variant: "d", angle: 0, kind: "mid" },
-  { model: "fern_02", variant: "a", angle: 0, kind: "bush" },
-  { model: "calathea_orbifolia_01", variant: "b", angle: 0, kind: "bush" },
+  { kind: "tree", procedural: "emergent", seed: 11 },
+  { kind: "tree", procedural: "emergent", seed: 29 },
+  { kind: "tree", procedural: "canopy", seed: 47 },
+  { kind: "palm", procedural: "palm", seed: 5 },
+  { kind: "palm", procedural: "palm", seed: 83 },
+  { kind: "mid", model: "pachira_aquatica_01", variant: "d" },
+  { kind: "bush", model: "fern_02", variant: "a" },
+  { kind: "bush", model: "calathea_orbifolia_01", variant: "b" },
 ];
 
 export const IMPOSTOR_CELL = { width: 512, height: 1024 };
@@ -40,14 +43,15 @@ export type Ring = {
 };
 
 export const FOREST_RINGS: Ring[] = [
-  { radius: 11.5, jitter: 1, spacing: 2.2, minH: 2.5, maxH: 4.5, blur: 0, layer: "undergrowth" },
-  { radius: 13, jitter: 1.5, spacing: 2.8, minH: 9, maxH: 14, blur: 0, layer: "trees" },
-  { radius: 17, jitter: 2, spacing: 3.0, minH: 10, maxH: 16, blur: 0, layer: "trees" },
-  { radius: 21, jitter: 1.5, spacing: 2.6, minH: 3, maxH: 5.5, blur: 2, layer: "undergrowth" },
-  { radius: 23, jitter: 2.5, spacing: 3.4, minH: 11, maxH: 18, blur: 2, layer: "trees" },
-  { radius: 31, jitter: 3, spacing: 3.8, minH: 12, maxH: 20, blur: 3, layer: "trees" },
-  { radius: 43, jitter: 4, spacing: 4.4, minH: 13, maxH: 23, blur: 5, layer: "trees" },
-  { radius: 60, jitter: 5, spacing: 5.2, minH: 15, maxH: 27, blur: 8, layer: "trees" },
+  { radius: 11.5, jitter: 1, spacing: 1.8, minH: 3, maxH: 6, blur: 0, layer: "undergrowth" },
+  { radius: 13.5, jitter: 1.5, spacing: 3.2, minH: 34, maxH: 48, blur: 0, layer: "trees" },
+  { radius: 17.5, jitter: 2, spacing: 3.4, minH: 34, maxH: 48, blur: 0, layer: "trees" },
+  { radius: 21, jitter: 1.5, spacing: 2.0, minH: 4, maxH: 8, blur: 2, layer: "undergrowth" },
+  { radius: 24, jitter: 2.5, spacing: 3.6, minH: 36, maxH: 50, blur: 2, layer: "trees" },
+  { radius: 28, jitter: 2, spacing: 2.4, minH: 5, maxH: 10, blur: 3, layer: "undergrowth" },
+  { radius: 32, jitter: 3, spacing: 4.0, minH: 36, maxH: 50, blur: 3, layer: "trees" },
+  { radius: 44, jitter: 4, spacing: 4.6, minH: 38, maxH: 52, blur: 5, layer: "trees" },
+  { radius: 62, jitter: 5, spacing: 5.4, minH: 40, maxH: 55, blur: 8, layer: "trees" },
 ];
 
 export const FOREST_BLUR_LEVELS = [...new Set(FOREST_RINGS.map((r) => r.blur))];
