@@ -1,16 +1,23 @@
 [
   {
-    "id": "stillgate",
-    "name": "Stillgate",
-    "icon": "🔒",
-    "status": "In use",
-    "summary": "Lockdown software for the shared visitor PCs at American Space Dushanbe.",
+    "id": "future-flow",
+    "name": "Future Flow",
+    "icon": "⏳",
+    "status": "In progress",
+    "summary": "Earn your scroll time: an AI future-self coach that gates social media on verified progress.",
     "description": [
-      "Visitor PCs boot straight into a locked screen. The registration desk unlocks a PC for a set time from a manager app; the visitor then sees a start screen with only the allowed programs and websites, and the PC locks itself again when time is up.",
-      "Offline-first on the local network, with TLS certificate pinning, HMAC challenge-response login per PC, a scrypt-hashed restore password and hardened Electron apps."
+      "An Android app where an AI \"future you\" turns who you want to become into skills and daily plans.",
+      "It verifies the work with real evidence — GitHub diffs, maths answers checked by a CAS, reading logs — and pays out social-media time from an event-sourced ledger that a native guard enforces."
     ],
-    "stack": ["Electron", "Node.js", "TypeScript", "TLS / HMAC"],
-    "links": { "code": "https://github.com/BahirYasrebSeemab/Stillgate" }
+    "stack": [
+      "TypeScript",
+      "React Native",
+      "Zod",
+      "Gemini"
+    ],
+    "links": {
+      "code": "https://github.com/BahirYasrebSeemab/futureflow"
+    }
   },
   {
     "id": "password-manager",
@@ -22,23 +29,81 @@
       "A multi-client monorepo: a FastAPI backend, a React Native / Expo app, and a browser extension and CLI on the way.",
       "Every vault entry is encrypted on-device with AES-256-GCM before it leaves the client, and login uses a key derived from the master password that can't be reversed into it. A fully compromised server leaks nothing usable."
     ],
-    "stack": ["Python", "FastAPI", "React Native", "Expo", "TypeScript", "AES-256-GCM"],
-    "links": {},
-    "private": true
+    "stack": [
+      "Python",
+      "FastAPI",
+      "React Native",
+      "Expo",
+      "TypeScript",
+      "AES-256-GCM"
+    ],
+    "links": {
+      "code": "https://github.com/BahirYasrebSeemab/PasswordManager"
+    }
   },
   {
-    "id": "future-flow",
-    "name": "Future Flow",
-    "icon": "⏳",
-    "status": "In progress",
-    "summary": "Earn your scroll time: an AI future-self coach that gates social media on verified progress.",
+    "id": "unghosted",
+    "name": "UnGhosted",
+    "icon": "👻",
+    "summary": "Desktop proctoring for live technical interviews: catches AI-assisted cheating.",
     "description": [
-      "An Android app where an AI \"future you\" turns who you want to become into skills and daily plans.",
-      "It verifies the work with real evidence — GitHub diffs, maths answers checked by a CAS, reading logs — and pays out social-media time from an event-sourced ledger that a native guard enforces."
+      "Two Electron apps (candidate kiosk and interviewer dashboard), an admin web app and a Go API, with a live WebRTC video call between candidate and interviewer.",
+      "The candidate app watches for window switching, pasted code, gaze drift and hidden overlay windows that dodge screen capture.",
+      "My part: the monorepo split, auth and room endpoints in Go, the admin web app, and fixing the live video (a TURN-credentials race and signaling glare)."
     ],
-    "stack": ["TypeScript", "React Native", "Zod", "Gemini"],
-    "links": {},
-    "private": true
+    "stack": [
+      "TypeScript",
+      "Electron",
+      "React",
+      "Go",
+      "PostgreSQL",
+      "WebRTC"
+    ],
+    "role": "Full-stack (team of 3)",
+    "links": {
+      "code": "https://github.com/BahirYasrebSeemab/unghosted"
+    }
+  },
+  {
+    "id": "sar-change-watch",
+    "name": "SAR Change Watch",
+    "icon": "🛰️",
+    "status": "NASA Space Apps 2026",
+    "summary": "See what a flood or fire changed on the ground, through smoke and cloud, from NISAR radar.",
+    "description": [
+      "A Python pipeline reads only the area of interest from NASA's radar files over HTTPS, detects and classifies change between two dates, and groups it into numbered areas.",
+      "A full-screen map tells each disaster's story in plain language, with a before/after swipe and a reading of any spot you point at."
+    ],
+    "stack": [
+      "Python",
+      "FastAPI",
+      "React",
+      "TypeScript",
+      "Leaflet"
+    ],
+    "links": {
+      "code": "https://github.com/BahirYasrebSeemab/sars-frontend"
+    }
+  },
+  {
+    "id": "stillgate",
+    "name": "Stillgate",
+    "icon": "🔒",
+    "status": "In use",
+    "summary": "Lockdown software for the shared visitor PCs at American Space Dushanbe.",
+    "description": [
+      "Visitor PCs boot straight into a locked screen. The registration desk unlocks a PC for a set time from a manager app; the visitor then sees a start screen with only the allowed programs and websites, and the PC locks itself again when time is up.",
+      "Offline-first on the local network, with TLS certificate pinning, HMAC challenge-response login per PC, a scrypt-hashed restore password and hardened Electron apps."
+    ],
+    "stack": [
+      "Electron",
+      "Node.js",
+      "TypeScript",
+      "TLS / HMAC"
+    ],
+    "links": {
+      "code": "https://github.com/BahirYasrebSeemab/Stillgate-dev"
+    }
   },
   {
     "id": "spotlight",
@@ -49,9 +114,18 @@
       "Brands publish drops; buyers receive a digital twin of their purchase to tag, display and share across their profile and posts.",
       "Real-time sync, offline support and a content feed inspired by modern streaming platforms."
     ],
-    "stack": ["React Native", "Expo", "TypeScript", "Supabase", "Redux Toolkit", "TanStack Query"],
-    "links": { "live": "https://spotlight-web-delta.vercel.app" },
-    "private": true
+    "stack": [
+      "React Native",
+      "Expo",
+      "TypeScript",
+      "Supabase",
+      "Redux Toolkit",
+      "TanStack Query"
+    ],
+    "links": {
+      "live": "https://spotlight-web-delta.vercel.app",
+      "code": "https://github.com/BahirYasrebSeemab/Spotlight"
+    }
   },
   {
     "id": "karevan",
@@ -62,8 +136,17 @@
       "Authentication, real-time chat with optimistic UI updates, and a responsive design.",
       "My part: the backend on Supabase — auth, the data model and the real-time chat."
     ],
-    "stack": ["React", "TypeScript", "Supabase", "TanStack Query", "Tailwind"],
+    "stack": [
+      "React",
+      "TypeScript",
+      "Supabase",
+      "TanStack Query",
+      "Tailwind"
+    ],
     "role": "Backend (Supabase)",
-    "links": { "live": "https://roaming-karevan.vercel.app", "code": "https://github.com/Fa1tinthesky/Karevan" }
+    "links": {
+      "live": "https://roaming-karevan.vercel.app",
+      "code": "https://github.com/Fa1tinthesky/Karevan"
+    }
   }
 ]
