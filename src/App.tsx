@@ -139,7 +139,7 @@ export default function App() {
       <div className="time-switch" role="group" aria-label="Time of day (dev control)">
         {(["live", "day", "sunset", "night"] as TimeMode[]).map((m) => (
           <button key={m} className={m === mode ? "active" : ""} onClick={() => setMode(m)}>
-            {m === "live" ? "Live · Dushanbe" : m}
+            {m === "live" ? "Live" : m}
           </button>
         ))}
       </div>
