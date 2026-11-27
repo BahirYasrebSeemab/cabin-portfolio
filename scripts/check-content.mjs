@@ -43,7 +43,7 @@ if (profile) {
   try {
     new Intl.DateTimeFormat("en", { timeZone: profile.timezone });
   } catch {
-    errors.push(`profile.json: "timezone" ${profile.timezone} isn't a real time zone (e.g. "Asia/Dushanbe")`);
+    errors.push(`profile.json: "timezone" ${profile.timezone} isn't a real time zone (e.g. "Europe/Berlin")`);
   }
 }
 

@@ -2,7 +2,7 @@
 
 **My portfolio as a place you can walk into:** a wooden cabin in a deep-green jungle. My projects
 are on the computer on the desk, my hobbies are tucked in the corners, and the light follows the
-real time of day in Dushanbe: morning sun, sunset, or lanterns and stars at night.
+real time of day where I am: morning sun, sunset, or lanterns and stars at night.
 
 Built with React, TypeScript and Three.js (React Three Fiber), hosted on Vercel.
 

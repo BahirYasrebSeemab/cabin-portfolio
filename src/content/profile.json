@@ -7,8 +7,8 @@
     "I'm open to remote work anywhere in the world — the plan is to see a lot of it while I work.",
     "Away from the keyboard: chess, books, football, guitar and flute, and a lot of time outdoors. One day, a moose."
   ],
-  "location": "Dushanbe, Tajikistan",
-  "timezone": "Asia/Dushanbe",
+  "location": "UTC+5",
+  "timezone": "Etc/GMT-5",
   "openTo": "Remote work, worldwide",
   "contacts": {
     "email": "bahiryasreb@gmail.com",

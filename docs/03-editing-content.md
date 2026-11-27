@@ -66,7 +66,7 @@ In `profile.json`:
 - `"title"` — shown under your name in the top-left corner.
 - `"bio"` — a list of paragraphs, shown in `about-me.txt` on the desktop.
 - `"openTo"` — shown at the bottom of the bio.
-- `"timezone"` — the cabin's day/night follows this clock. Use a name from https://en.wikipedia.org/wiki/List_of_tz_database_time_zones (e.g. `"Asia/Dushanbe"`, `"Europe/Berlin"`). Change it when you travel!
+- `"timezone"` — the cabin's day/night follows this clock. Use a name from https://en.wikipedia.org/wiki/List_of_tz_database_time_zones (e.g. `"Europe/Berlin"`; `"Etc/GMT-5"` means UTC+5, the sign is flipped). Change it when you travel!
 
 ## Contacts
 
